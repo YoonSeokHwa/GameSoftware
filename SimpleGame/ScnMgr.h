@@ -6,6 +6,7 @@ class ScnMgr
 {
 	Renderer *m_render;
 	object *m_object[5];
+	GLuint m_ZzangTex;
 	int index = 0;
 	float m_time;
 	

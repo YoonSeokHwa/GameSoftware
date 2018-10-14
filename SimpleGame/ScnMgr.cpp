@@ -11,6 +11,7 @@ ScnMgr::ScnMgr()
 	{
 		std::cout << "Renderer could not be initialized.. \n";
 	}
+	m_ZzangTex = m_render->CreatePngTexture("Zzang.png");
 
 	/*m_object->SetColor(1, 0, 1, 0);
 	m_object->SetPosition(10, 10, 0);
@@ -26,7 +27,7 @@ void ScnMgr::Draw()
 {
 	for (int i = 0; i < index; i++)
 	{
-		m_object[i]->Draw(m_render);
+		m_object[i]->Draw(m_render,m_ZzangTex);
 	}
 }
 

@@ -57,9 +57,12 @@ void object::Update(float eTime)
 
 }
 
-void object::Draw(Renderer* renderer)
+void object::Draw(Renderer* renderer, GLuint tex)
 {
-	renderer->DrawSolidRect(m_PosX, m_PosY, 0, m_Width, m_Height, m_R, m_G, m_B, m_A);
+	if (tex != NULL)
+		renderer->DrawTextureRect(m_PosX, m_PosY, 0, m_Width, m_Height, 1, 1, 1, 1, tex);
+	else
+		renderer->DrawSolidRect(m_PosX, m_PosY, 0, m_Width, m_Height, m_R, m_G, m_B, m_A);
 }
 
 void object::ApplyForce(float x, float y, float eTime)
