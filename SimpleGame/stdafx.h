@@ -4,6 +4,14 @@
 #include "renderer.h"
 #include <stdio.h>
 #include <tchar.h>
+#include <iostream>
+#include <Windows.h>
+
+using namespace std;
 
 
-#define FRICTION_COEF 0.2 //마찰력 크기
+#define FRICTION_COEF 0.2f //마찰력 크기
+#define GRAVITY 9.8f
+#define KEY_FORCE 5.0f
+
+float magnitude(float x, float y);
