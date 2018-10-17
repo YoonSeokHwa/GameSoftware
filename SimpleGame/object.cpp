@@ -11,68 +11,57 @@ object::~object()
 {
 }
 
-void object::SetPosition(float x, float y, float z){ m_PosX = x; m_PosY = y;}
+void object::SetPosition(float x, float y, float z){ m_posX = x; m_posY = y;}
 
 void object::SetColor(float r, float g, float b, float a){ m_A = a; m_R = r; m_B = b; m_G = g;}
 
-void object::SetSize(float width, float height) { m_Height = height; m_Width = width; }
+void object::SetSize(float width, float height) { m_height = height; m_width = width; }
 
 void object::SetMess(float mass){ m_mass = mass;}
 
 void object::Update(float eTime)
 {
-	//m_PosX += m_mass*time;
-	float velocity = sqrtf(m_Velx*m_Vely + m_Velx + m_Vely); //속도의 크기 size of velocity
-	if (velocity < FLT_EPSILON) {
+	float fSpeed = magnitude(m_velX, m_velY);
+	if (fSpeed)
+	{
+		float fPreviousVelocityX = m_velX;
+		float fPreviousVelocityY = m_velY;
 
+		float fFriction = FRICTION_COEF * m_mass * GRAVITY;
+		float fForceX = -fFriction * m_velX / fSpeed;
+		float fForceY = -fFriction * m_velY / fSpeed;
+
+		m_velX += eTime * (fForceX / m_mass);
+		m_velY += eTime * (fForceY / m_mass);
+
+		//Fixes issue of friction subtracting more than needed (best way?)
+		if (m_velX * fPreviousVelocityX < 0.f)
+			m_velX = 0.f;
+		if (m_velY * fPreviousVelocityY < 0.f)
+			m_velY = 0.f;
 	}
-	else {
-		//gravity force
-		float gz;
-		gz = 9.8 * m_mass;	//수직항력
-		float friction;
-		friction = m_FrictionCoef * gz; //마찰력의 크기
 
-		//마찰력의 방향 friction
-		float fx, fy, size;
-		fx = -friction * m_Velx / velocity;
-		fy = -friction * m_Vely / velocity;
+	m_velX += eTime * (m_forceX / m_mass);
+	m_velY += eTime * (m_forceY / m_mass);
 
-		//백터 노말라이징제이션
+	m_prevX = m_posX;
+	m_prevY = m_posY;
 
-		//가속도 Calc acc
-		float accX, accY;
-		accX = fx / m_mass;
-		accY = fy / m_mass;
-		m_Velx = m_Velx + eTime * accX;
-		m_Vely = m_Vely + eTime * accY;
-	}
-	m_Velx = m_Velx - eTime * 0.2;
-	m_Velx = m_Velx + eTime * m_AccX;
-	m_Vely = m_Vely + eTime * m_AccY;
-//calc position
-	m_PosX = m_PosX + eTime * m_Velx;
-	m_PosY = m_PosX + eTime * m_Vely;
-
+	m_posX += eTime * m_velX;
+	m_posY += eTime * m_velY;
 
 }
 
 void object::Draw(Renderer* renderer, GLuint tex)
 {
 	if (tex != NULL)
-		renderer->DrawTextureRect(m_PosX, m_PosY, 0, m_Width, m_Height, 1, 1, 1, 1, tex);
+		renderer->DrawTextureRect(m_posX, m_posY, 0, m_width, m_height, 1, 1, 1, 1, tex);
 	else
-		renderer->DrawSolidRect(m_PosX, m_PosY, 0, m_Width, m_Height, m_R, m_G, m_B, m_A);
+		renderer->DrawSolidRect(m_posX, m_posY, 0, m_width, m_height, m_R, m_G, m_B, m_A);
 }
 
-void object::ApplyForce(float x, float y, float eTime)
+void object::ApplyForce(float x, float y)
 {
-	m_AccX = x / m_mass; //  x힘의 크기 / 무게
-	m_AccY = y / m_mass; //  y힘의 크기 / 무게
-
-	m_Velx = m_Velx + m_AccX * eTime;// 현재속도 + x가속도 * 프레임 사이 흐른 시간
-	m_Vely = m_Vely + m_AccY * eTime;// 현재속도 + y가속도 * 프레임 사이 흐른 시간
-
-	//m_AccX = o.f;
-	//m_Accy = o.f;
+	m_forceX = x;
+	m_forceY = y;
 }

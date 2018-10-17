@@ -9,8 +9,6 @@ but WITHOUT ANY WARRANTY.
 */
 
 #include "stdafx.h"
-#include <iostream>
-#include <Windows.h>
 #include "Dependencies\glew.h"
 #include "Dependencies\freeglut.h"
 #include "ScnMgr.h"
@@ -31,11 +29,8 @@ void RenderScene(void)
 	g_PrevTime = currTime;
 	float eTime = (float)elapsedTime / 1000.f;
 
-	//std::cout << eTime << std::endl;
 	m_ScnMgr->Update(eTime);
 	m_ScnMgr->Draw();
-	// Renderer Test
-	//g_Renderer->DrawSolidRect(g_object->m_PosX,g_object->m_PosY,0,g_object->m_Width*g_object->m_Height,g_object->m_R,g_object->m_G,g_object->m_B,g_object->m_A);
 
 	glutSwapBuffers();
 }
@@ -50,8 +45,6 @@ void MouseInput(int button, int state, int x, int y)
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_UP) {
 		x = x - (500 / 2);
 		y = (500 / 2) - y;
-		m_ScnMgr->MakeObject(x,y, 0, 10, 10, 1, 0, 1, 1);
-
 	}
 
 	RenderScene();
