@@ -12,7 +12,7 @@ ScnMgr::ScnMgr()
 		std::cout << "Renderer could not be initialized.. \n";
 	}
 	m_ZzangTex = m_render->CreatePngTexture("Zzang.png");
-
+	MakeObject(0, 0, 0, 10, 10, 1, 0, 1, 1);
 	/*m_object->SetColor(1, 0, 1, 0);
 	m_object->SetPosition(10, 10, 0);
 	m_object->SetSize(10, 10);*/
@@ -51,18 +51,26 @@ void ScnMgr::Update(float time)
 	m_time = time;
 	for (int i = 0; i < index; i++)
 	{
-		m_object[i]->ApplyForce(30, 3, time);
 		m_object[i]->Update(time);
 	}
 }
 
 void ScnMgr::KeyInput(unsigned char key, int x, int y)
 {
-	//if (key == 'w')
-	//{
-	//	for (int i = 0; i < index; i++)
-	//	{
-	//		m_object[i]->ApplyForce(0, 30, m_time);
-	//	}
-	//}
+	if (key == 'w')
+	{
+		m_object[0]->ApplyForce(0, KEY_FORCE);
+	}
+	if (key == 's')
+	{
+		m_object[0]->ApplyForce(0, -KEY_FORCE);
+	}
+	if (key == 'd')
+	{
+		m_object[0]->ApplyForce(KEY_FORCE, 0);
+	}
+	if (key == 'a')
+	{
+		m_object[0]->ApplyForce(-KEY_FORCE, 0);
+	}
 }
