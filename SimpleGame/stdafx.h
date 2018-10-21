@@ -12,6 +12,7 @@ using namespace std;
 
 #define FRICTION_COEF 0.2f //마찰력 크기
 #define GRAVITY 9.8f
-#define KEY_FORCE 5.0f
+#define KEY_FORCE 10.0f
+#define OBJECT_SPEED 0.1f
 
 float magnitude(float x, float y);

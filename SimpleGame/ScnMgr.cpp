@@ -40,6 +40,7 @@ void ScnMgr::MakeObject(float x, float y, float z, float w, float h, float r, fl
 	m_object[index]->SetColor(r, g, b, a);
 	m_object[index]->SetPosition(x, y,0);
 	m_object[index]->SetMess(rand()%10+1);
+	m_object[index]->SetVel(OBJECT_SPEED, OBJECT_SPEED);
 	if (index < 4)
 	{
 		index += 1;
@@ -73,4 +74,9 @@ void ScnMgr::KeyInput(unsigned char key, int x, int y)
 	{
 		m_object[0]->ApplyForce(-KEY_FORCE, 0);
 	}
+}
+
+void ScnMgr::KeyUpInput(unsigned char key, int x, int y)
+{
+	m_object[0]->ApplyForce(0, 0);
 }

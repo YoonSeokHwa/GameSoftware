@@ -18,5 +18,6 @@ public:
 	void MakeObject(float x, float y, float z, float w, float h, float r, float g, float b, float a);
 	void Update(float time);
 	void KeyInput(unsigned char key, int x, int y);
+	void KeyUpInput(unsigned char key, int x, int y);
 };
 

@@ -59,6 +59,13 @@ void KeyInput(unsigned char key, int x, int y)
 
 }
 
+void KeyUpInput(unsigned char key, int x, int y)
+{
+	m_ScnMgr->KeyUpInput(key, x, y);
+
+	RenderScene();
+}
+
 void SpecialKeyInput(int key, int x, int y)
 {
 	RenderScene();
@@ -92,6 +99,8 @@ int main(int argc, char **argv)
 	glutDisplayFunc(RenderScene);
 	glutIdleFunc(Idle);
 	glutKeyboardFunc(KeyInput);
+	glutKeyboardUpFunc(KeyUpInput);
+	glutSetKeyRepeat(GLUT_KEY_REPEAT_OFF); //함수 한번만 부르게 해주는거
 	glutMouseFunc(MouseInput);
 	glutSpecialFunc(SpecialKeyInput);
 
