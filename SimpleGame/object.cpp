@@ -11,40 +11,26 @@ object::~object()
 {
 }
 
-void object::SetVel(float vx, float vy)
-{
-	m_velX = vx;
-	m_velY = vy;
-}
-
 void object::SetPosition(float x, float y, float z){ m_posX = x; m_posY = y;}
 
 void object::SetColor(float r, float g, float b, float a){ m_A = a; m_R = r; m_B = b; m_G = g;}
 
 void object::SetSize(float width, float height) { m_height = height; m_width = width; }
 
-void object::SetMess(float mass){ m_mass = mass;}
+void object::SetMass(float mass){ m_mass = mass;}
 
 void object::Update(float eTime)
 {
-	float accX = (m_forceX / m_mass);
-	float accY = (m_forceY / m_mass);
-	//가속도 구하기 힘/질량
-	m_velX += accX *eTime  ;
-	m_velY += accY *eTime;
-	//현재 속도까지 구했어
-
-
+	
 	//속도의 크기 구하기
 	float velocity = sqrt((m_velX * m_velX) + (m_velY * m_velY));
-	if (velocity > FLT_EPSILON)
+
+	if (velocity > FLT_EPSILON)//속도가 있으면.
 	{
-	}
-	else
-	{
+
+
 		float gz = GRAVITY * m_mass;//중력가속도. 중력 속도 * 질량.
-		float friction;
-		friction = FRICTION_COEF * gz;//마찰력 값
+		float friction = FRICTION_COEF * gz;//마찰력 값
 
 		float frictionVelX, frictionVelY;
 		frictionVelX = -friction * m_velX / velocity;
@@ -68,11 +54,16 @@ void object::Update(float eTime)
 			m_velY = 0.0f;
 		else
 			m_velY = m_velY + (frictionAccY * eTime);
-		m_velX = m_velX + (frictionAccX * eTime);
-		m_velY = m_velY + (frictionAccY * eTime);
+
+	/*	m_velX = m_velX + (frictionAccX * eTime);
+		m_velY = m_velY + (frictionAccY * eTime);*/
 	}
+
+	float accX = (m_forceX / m_mass);
+	float accY = (m_forceY / m_mass);
+
 	m_velX = m_velX + accX * eTime;
-	m_velX = m_velX + accX * eTime;
+	m_velY = m_velY + accY * eTime;
 
 
 	m_posX = m_posX + (m_velX*eTime);
@@ -112,13 +103,13 @@ void object::Update(float eTime)
 void object::Draw(Renderer* renderer, GLuint tex)
 {
 	if (tex != NULL)
-		renderer->DrawTextureRect(m_posX, m_posY, 0, m_width, m_height, 1, 1, 1, 1, tex);
+		renderer->DrawTextureRect(m_posX*100 , m_posY*100, 0, m_width*100.f, -m_height*100.f, 1, 1, 1, 1, tex);
 	else
-		renderer->DrawSolidRect(m_posX, m_posY, 0, m_width, m_height, m_R, m_G, m_B, m_A);
+		renderer->DrawSolidRect(m_posX, m_posY, 0, m_width, -m_height, m_R, m_G, m_B, m_A);
 }
 
 void object::ApplyForce(float x, float y)
 {
-	m_forceX = x;
-	m_forceY = y;
+	m_forceX += x;
+	m_forceY += y;
 }

@@ -13,23 +13,34 @@ but WITHOUT ANY WARRANTY.
 #include "Dependencies\freeglut.h"
 #include "ScnMgr.h"
 
+
+
 ScnMgr *m_ScnMgr;
-float g_PrevTime = 0;
+
+
+
+
+TimePoint g_PrevTime;
+float g_timeAccumulator = 0;//시간을 누적
+
 
 void RenderScene(void)  
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearColor(0.0f, 0.3f, 0.3f, 1.0f);
 
-	if (g_PrevTime == 0) {
-		g_PrevTime = timeGetTime();
-	}
-	DWORD currTime = timeGetTime();
-	DWORD elapsedTime = currTime - g_PrevTime;
+	TimePoint currTime = Time::now();
+	float elapsedTime = TimeDuration(currTime - g_PrevTime).count();
 	g_PrevTime = currTime;
-	float eTime = (float)elapsedTime / 1000.f;
+	
+	g_timeAccumulator += elapsedTime;
 
-	m_ScnMgr->Update(eTime);
+	while (g_timeAccumulator >= UPDATE_FREQUENCY)//float는 계산할수록 에러가 나니까 같은 시간을 업데이트에게 줄려구
+	{
+		m_ScnMgr->Update(UPDATE_FREQUENCY);
+		g_timeAccumulator -= UPDATE_FREQUENCY;
+	}
+
 	m_ScnMgr->Draw();
 
 	glutSwapBuffers();
@@ -74,7 +85,7 @@ void SpecialKeyInput(int key, int x, int y)
 int main(int argc, char **argv)
 {
 
-
+	g_PrevTime = Time::now();
 	// Initialize GL things
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
@@ -104,10 +115,10 @@ int main(int argc, char **argv)
 	glutMouseFunc(MouseInput);
 	glutSpecialFunc(SpecialKeyInput);
 
-
+	
 	glutMainLoop();
 
-
+	delete m_ScnMgr;
     return 0;
 }
 

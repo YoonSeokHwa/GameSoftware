@@ -20,11 +20,10 @@ private:
 public:
 	object();
 	~object();
-	void SetVel(float vx,float vy);
 	void SetPosition(float x, float y, float z);
 	void SetColor(float r, float g, float b, float a);
 	void SetSize(float width, float height);
-	void SetMess(float mess);
+	void SetMass(float mess);
 	void Update(float eTime);
 	void Draw(Renderer* renderer, GLuint tex = NULL);
 	void ApplyForce(float x, float y);
