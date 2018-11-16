@@ -5,17 +5,20 @@
 class ScnMgr
 {
 	Renderer *m_render;
-	object *m_object[5];
+	vector<Object*> m_vAlly;
+	vector<Object*> m_vEnemy;
 	GLuint m_ZzangTex;
-	int index = 0;
-	float m_time;
 	
 public:
 	ScnMgr();
 	~ScnMgr();
 
+
+	void MakeAlly(float x, float y, float z, float w, float h, float r, float g, float b, float a);
+	void MakeEnemy(float x, float y, float z, float w, float h, float r, float g, float b, float a);
+	void CollisionCheck();
+
 	void Draw();
-	void MakeObject(float x, float y, float z, float w, float h, float r, float g, float b, float a);
 	void Update(float time);
 	void KeyInput(unsigned char key, int x, int y);
 	void KeyUpInput(unsigned char key, int x, int y);

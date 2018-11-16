@@ -13,14 +13,9 @@ but WITHOUT ANY WARRANTY.
 #include "Dependencies\freeglut.h"
 #include "ScnMgr.h"
 
-
-
 ScnMgr *m_ScnMgr;
 
-
-
-
-TimePoint g_PrevTime;
+TimePoint g_PrevTime = Time::now();
 float g_timeAccumulator = 0;//시간을 누적
 
 
@@ -85,7 +80,7 @@ void SpecialKeyInput(int key, int x, int y)
 int main(int argc, char **argv)
 {
 
-	g_PrevTime = Time::now();
+	
 	// Initialize GL things
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);

@@ -1,5 +1,5 @@
 #pragma once
-class object	 //그리는거 모아논거
+class Object	 //그리는거 모아논거
 {
 private:
 	float m_posX;
@@ -18,8 +18,8 @@ private:
 	float m_prevX = 0, m_prevY = 0;
 
 public:
-	object();
-	~object();
+	Object();
+	~Object();
 	void SetPosition(float x, float y, float z);
 	void SetColor(float r, float g, float b, float a);
 	void SetSize(float width, float height);
@@ -27,6 +27,7 @@ public:
 	void Update(float eTime);
 	void Draw(Renderer* renderer, GLuint tex = NULL);
 	void ApplyForce(float x, float y);
+	Rect GetRect();
 
 };
 
