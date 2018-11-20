@@ -2,6 +2,7 @@
 #include "ScnMgr.h"
 #include <random>
 
+
 ScnMgr::ScnMgr()
 {
 	m_render = new Renderer(500,500);
@@ -11,12 +12,13 @@ ScnMgr::ScnMgr()
 	{
 		std::cout << "Renderer could not be initialized.. \n";
 	}
-	m_ZzangTex = m_render->CreatePngTexture("Zzang.png");
-	MakeAlly(0, 0, 0, 100, 100, 1, 0, 1, 1);
+	m_ZzangTex = m_render->CreatePngTexture("../SimpleGame/Resource/Skeleton Walk.png");
+	m_slimeTex = m_render->CreatePngTexture("../SimpleGame/Resource/blob move.png");
+	MakeAlly(0, 0, 0, 100, 100, 0, 0, 0, 1);
 
 	for (int i = 0; i < 5; i++)
 	{
-		MakeEnemy(rand() % 500 - 250, rand() % 500 - 250, 0, 100, 100, 0, 1, 1,1);
+		MakeEnemy(rand() % 500 - 250, rand() % 500 - 250, 0, 100, 100, 0, 0, 0,1);
 	}
 }
 
@@ -33,7 +35,7 @@ void ScnMgr::Draw()
 	}
 	for (auto& object : m_vEnemy)
 	{
-		object->Draw(m_render);
+		object->Draw(m_render,m_slimeTex);
 	}
 }
 
@@ -46,7 +48,7 @@ void ScnMgr::MakeAlly(float x, float y, float z, float w, float h, float r, floa
 	obj->SetColor(r, g, b, a);
 	obj->SetPosition(x, y,0);
 	obj->SetMass(10.f);
-
+	obj->SetTotalIndex(13);
 
 	m_vAlly.push_back(obj);
 }
@@ -59,7 +61,7 @@ void ScnMgr::MakeEnemy(float x, float y, float z, float w, float h, float r, flo
 	obj->SetColor(r, g, b, a);
 	obj->SetPosition(x, y, 0);
 	obj->SetMass(10.f);
-
+	obj->SetTotalIndex(8);
 
 	m_vEnemy.push_back(obj);
 }

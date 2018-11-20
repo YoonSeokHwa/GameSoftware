@@ -8,6 +8,7 @@ class ScnMgr
 	vector<Object*> m_vAlly;
 	vector<Object*> m_vEnemy;
 	GLuint m_ZzangTex;
+	GLuint m_slimeTex;
 	
 public:
 	ScnMgr();

@@ -16,7 +16,9 @@ private:
 	float m_velX = 0, m_velY = 0;//x속도, y속도
 	//이전 위치
 	float m_prevX = 0, m_prevY = 0;
-
+	////
+	float m_animationIndex = 0;
+	int m_totalAnimationIndex = 0;
 public:
 	Object();
 	~Object();
@@ -24,6 +26,7 @@ public:
 	void SetColor(float r, float g, float b, float a);
 	void SetSize(float width, float height);
 	void SetMass(float mess);
+	void SetTotalIndex(int index) { m_totalAnimationIndex = index; }
 	void Update(float eTime);
 	void Draw(Renderer* renderer, GLuint tex = NULL);
 	void ApplyForce(float x, float y);

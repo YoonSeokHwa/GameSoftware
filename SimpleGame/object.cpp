@@ -22,6 +22,8 @@ void Object::SetMass(float mass){ m_mass = mass;}
 void Object::Update(float eTime)
 {
 	
+	m_animationIndex += eTime;
+
 	//속도의 크기 구하기
 	float velocity = sqrt((m_velX * m_velX) + (m_velY * m_velY));
 
@@ -73,7 +75,7 @@ void Object::Update(float eTime)
 void Object::Draw(Renderer* renderer, GLuint tex)
 {
 	if (tex != NULL)
-		renderer->DrawTextureRect(m_posX , m_posY, 0, m_width, (-m_height), 1, 1, 1, 1, tex);
+		renderer->DrawTextureRectSeqXY(m_posX, m_posY, 0, m_width, (m_height), m_R, m_G, m_B, m_A, tex, (int)m_animationIndex%m_totalAnimationIndex, 0, m_totalAnimationIndex,1);
 	else
 		renderer->DrawSolidRect(m_posX, m_posY, 0, m_width, (m_height), m_R, m_G, m_B, m_A);
 }
